@@ -3,25 +3,25 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CrateEventsTable extends Migration
-{
+class CrateEventsTable extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
-    {
+    public function up() {
         Schema::create('events', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
             $table->text('description');
+            $table->string('location');
             $table->integer('color_id')
             ->unsigned();
             $table->dateTime('start_at');
             $table->dateTime('end_at');
+            $table->integer('status_id')->unsigned();
             $table->boolean('repeatable');
-            $table->enum('interval', ["day", "week", "month", "year"]);
+            $table->enum('interval', ["day", "week", "month", "year"])->nullable();
             $table->integer('category_id')->unsigned();
 
             $table->foreign('color_id')
@@ -34,6 +34,11 @@ class CrateEventsTable extends Migration
             ->on('categories')
             ->onDelete('restrict');
 
+            $table->foreign('status_id')
+            ->references('id')
+            ->on('statuses')
+            ->onDelete('restrict');
+
             $table->timestamps();
         });
     }
@@ -43,8 +48,7 @@ class CrateEventsTable extends Migration
      *
      * @return void
      */
-    public function down()
-    {
+    public function down() {
         Schema::drop('events');
     }
 }

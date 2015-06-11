@@ -3,19 +3,17 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateColorTable extends Migration
-{
+class CreateColorTable extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
-    {
+    public function up() {
         Schema::create('colors', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('hex_code', 6);
+            $table->string('hex_code', 7);
             $table->timestamps();
         });
     }
@@ -25,8 +23,7 @@ class CreateColorTable extends Migration
      *
      * @return void
      */
-    public function down()
-    {
+    public function down() {
         Schema::drop('colors');
     }
 }
