@@ -95,7 +95,7 @@ class EventController extends Controller {
         $event->category_id = $request->get('category_id');
 
         $event->save();
-        return response()->json(['message' => 'The event was update', 'code' => 200], 201);
+        return response()->json(['message' => 'The event was update', 'code' => 201], 201);
     }
 
     /**
@@ -105,6 +105,13 @@ class EventController extends Controller {
      * @return Response
      */
     public function destroy($id) {
-        //
-    }
+        $event = Event::find($id);
+        if (!$event) {
+            return response()->json(["error" => 'This event missing', 'code' => 404], 404);
+        }
+        if ($event->delete($id)) {
+            return response()->json(["message" => 'This event was deleted', 'code' => 200], 200);
+        } else {
+            return response()->json(["error" => 'There problem with deleted event', 'code' => 500], 500);
+        }}
 }
