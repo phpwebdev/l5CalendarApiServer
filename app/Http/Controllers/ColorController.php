@@ -116,7 +116,11 @@ class ColorController extends Controller {
         }
         //
     }
-
+    /**
+     * [__prepireHexValue convert XXXXXX to #XXXXXX]
+     * @param  [string] $hexCode [XXXXXX format]
+     * @return [string]          [#XXXXXX format]
+     */
     protected function __prepireHexValue($hexCode) {
         $newHexCode = '#' . $hexCode;
         return $newHexCode;
