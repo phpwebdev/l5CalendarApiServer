@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Event;
 use Illuminate\Database\Eloquent\Model;
 
 class Status extends Model {
@@ -25,4 +26,8 @@ class Status extends Model {
      * @var array
      */
     protected $hidden = ['created_at', 'updated_at'];
+
+    public function event() {
+        return $this->HasMany('App\Event');
+    }
 }

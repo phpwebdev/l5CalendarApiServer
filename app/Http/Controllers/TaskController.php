@@ -1,32 +1,24 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\task;
 
-class TaskController extends Controller
-{
+class TaskController extends Controller {
     /**
      * Display a listing of the resource.
      *
      * @return Response
      */
-    public function index()
-    {
-        //
-    }
+    public function index() {
+        $tasksTmp = task::all();
+        foreach ($tasksTmp as $taskId => $taskValue) {
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
+            $tasks[$taskId]             = $taskValue;
+            $tasks[$taskId]['color']    = $taskValue->color;
+            $tasks[$taskId]['category'] = $taskValue->category;
+        }
+        return response()->json(['data' => $tasks], 200); //
     }
 
     /**
@@ -34,8 +26,7 @@ class TaskController extends Controller
      *
      * @return Response
      */
-    public function store()
-    {
+    public function store() {
         //
     }
 
@@ -45,20 +36,16 @@ class TaskController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function show($id)
-    {
-        //
-    }
+    public function show($id) {
+        $task = task::find($id);
+        if (!$task) {
+            return response()->json(["message" => 'This task missing', 'code' => 404], 404);
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
+        $task['color']    = $task->color;
+        $task['category'] = $task->category;
+
+        return response()->json(["data" => $task, 'code' => 200], 200);
     }
 
     /**
@@ -67,8 +54,7 @@ class TaskController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update($id)
-    {
+    public function update($id) {
         //
     }
 
@@ -78,8 +64,7 @@ class TaskController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id)
-    {
+    public function destroy($id) {
         //
     }
 }

@@ -2,10 +2,11 @@
 
 namespace App;
 
+use App\Event;
+use App\Task;
 use Illuminate\Database\Eloquent\Model;
 
-class Color extends Model
-{
+class Color extends Model {
     /**
      * The database table used by the model.
      *
@@ -26,4 +27,12 @@ class Color extends Model
      * @var array
      */
     protected $hidden = ['created_at', 'updated_at'];
+
+    public function task() {
+        return $this->HasMany('App\Task');
+    }
+
+    public function event() {
+        return $this->HasMany('App\Event');
+    }
 }

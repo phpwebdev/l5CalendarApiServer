@@ -2,31 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
+use App\Event;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateEventRequest;
 
-class EventController extends Controller
-{
+class EventController extends Controller {
     /**
      * Display a listing of the resource.
      *
      * @return Response
      */
-    public function index()
-    {
-        //
-    }
+    public function index() {
+        $eventsTmp = Event::all();
+        foreach ($eventsTmp as $eventId => $eventValue) {
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
+            $events[$eventId]             = $eventValue;
+            $events[$eventId]['color']    = $eventValue->color;
+            $events[$eventId]['status']   = $eventValue->status;
+            $events[$eventId]['category'] = $eventValue->category;
+        }
+        return response()->json(['data' => $events], 200);
     }
 
     /**
@@ -34,9 +29,24 @@ class EventController extends Controller
      *
      * @return Response
      */
-    public function store()
-    {
-        //
+    public function store(CreateEventRequest $request) {
+
+        $values = $request->only([
+            'title',
+            'description',
+            'location',
+            'color_id',
+            'start_at',
+            'end_at',
+            'status_id',
+            'repeatable',
+            'interval',
+            'category_id',
+        ]);
+
+        Event::create($values);
+        return response()->json(['message' => 'The event was created', 'code' => 201], 201);
+
     }
 
     /**
@@ -45,19 +55,17 @@ class EventController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function show($id)
-    {
-        //
-    }
+    public function show($id) {
+        $event = Event::find($id);
+        if (!$event) {
+            return response()->json(["message" => 'This event missing', 'code' => 404], 404);
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
-    {
+        $event['color']    = $event->color;
+        $event['status']   = $event->status;
+        $event['category'] = $event->category;
+
+        return response()->json(["data" => $event, 'code' => 200], 200);
         //
     }
 
@@ -67,9 +75,27 @@ class EventController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update($id)
-    {
-        //
+    public function update(CreateEventRequest $request, $id) {
+
+        $event = Event::find($id);
+
+        if (!$event) {
+            return response()->json(["message" => 'This event missing', 'code' => 404], 404);
+        }
+
+        $event->title       = $request->get('title');
+        $event->description = $request->get('description');
+        $event->location    = $request->get('location');
+        $event->color_id    = $request->get('color_id');
+        $event->start_at    = $request->get('start_at');
+        $event->end_at      = $request->get('end_at');
+        $event->status_id   = $request->get('status_id');
+        $event->repeatable  = $request->get('repeatable');
+        $event->interval    = $request->get('interval');
+        $event->category_id = $request->get('category_id');
+
+        $event->save();
+        return response()->json(['message' => 'The event was update', 'code' => 200], 201);
     }
 
     /**
@@ -78,8 +104,7 @@ class EventController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id)
-    {
+    public function destroy($id) {
         //
     }
 }

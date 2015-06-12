@@ -1,11 +1,11 @@
 <?php
 
 namespace App;
-
+use App\Event;
+use App\Task;
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
-{
+class Category extends Model {
     /**
      * The database table used by the model.
      *
@@ -26,4 +26,12 @@ class Category extends Model
      * @var array
      */
     protected $hidden = ['created_at', 'updated_at'];
+
+    public function task() {
+        return $this->HasMany('App\Task');
+    }
+
+    public function event() {
+        return $this->HasMany('App\Event');
+    }
 }

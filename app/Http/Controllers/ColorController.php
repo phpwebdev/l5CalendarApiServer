@@ -2,30 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class ColorController extends Controller
-{
+class ColorController extends Controller {
     /**
      * Display a listing of the resource.
      *
      * @return Response
      */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
+    public function index() {
         //
     }
 
@@ -34,8 +19,7 @@ class ColorController extends Controller
      *
      * @return Response
      */
-    public function store()
-    {
+    public function store() {
         //
     }
 
@@ -45,19 +29,7 @@ class ColorController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
-    {
+    public function show($id) {
         //
     }
 
@@ -67,8 +39,7 @@ class ColorController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update($id)
-    {
+    public function update($id) {
         //
     }
 
@@ -78,8 +49,7 @@ class ColorController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id)
-    {
+    public function destroy($id) {
         //
     }
 }
