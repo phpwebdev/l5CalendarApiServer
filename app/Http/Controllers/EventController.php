@@ -58,7 +58,7 @@ class EventController extends Controller {
     public function show($id) {
         $event = Event::find($id);
         if (!$event) {
-            return response()->json(["message" => 'This event missing', 'code' => 404], 404);
+            return response()->json(["error" => 'This event missing', 'code' => 404], 404);
         }
 
         $event['color']    = $event->color;

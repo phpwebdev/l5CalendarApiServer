@@ -39,10 +39,8 @@ class TaskController extends Controller {
             'interval',
             'category_id',
         ]);
-
         Task::create($values);
         return response()->json(['message' => 'The Task was created', 'code' => 201], 201);
-
     }
 
     /**
@@ -54,12 +52,10 @@ class TaskController extends Controller {
     public function show($id) {
         $task = task::find($id);
         if (!$task) {
-            return response()->json(["message" => 'This task missing', 'code' => 404], 404);
+            return response()->json(["error" => 'This task missing', 'code' => 404], 404);
         }
-
         $task['color']    = $task->color;
         $task['category'] = $task->category;
-
         return response()->json(["data" => $task, 'code' => 200], 200);
     }
 
