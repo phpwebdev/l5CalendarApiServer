@@ -10,7 +10,7 @@ All method for CRUD available on this URL's
  - server.com/colors
 
 Availabe GET method on this URl
-server.com/search 
+- server.com/search 
 
 with parameter 
  - type [All , task , event]
