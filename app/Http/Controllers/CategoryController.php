@@ -28,8 +28,9 @@ class CategoryController extends Controller {
             'name',
         ]);
 
-        Category::create($values);
-        return response()->json(['message' => 'The category was created', 'code' => 201], 201);
+        $category = Category::create($values);
+        $category = Category::find($category->id);
+        return response()->json(['message' => 'The category was created', 'data' => $category, 'code' => 201], 201);
 
     }
 

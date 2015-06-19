@@ -7,7 +7,8 @@
     "require": {
         "php": ">=5.5.9",
         "laravel/framework": "5.1.*",
-        "kennedytedesco/validation": "~2.0.4"
+        "kennedytedesco/validation": "~2.0.4",
+        "barryvdh/laravel-debugbar": "^2.0@dev"
         
     },
     "require-dev": {

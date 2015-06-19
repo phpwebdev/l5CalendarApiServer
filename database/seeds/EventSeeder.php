@@ -1,5 +1,6 @@
 <?php
 use App\Event;
+use Carbon\Carbon;
 use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
 
@@ -11,19 +12,7 @@ class EventSeeder extends Seeder {
      */
     public function run() {
         $faker = Faker::create();
-        for ($x = 0; $x <= 50; $x++) {
-
-            $start_at = $faker
-                ->dateTimeBetween(
-                    '-12 week',
-                    '+14 week'
-                );
-
-            $end_at = $faker
-                ->dateTimeBetween(
-                    $start_at,
-                    '+15 week'
-                );
+        for ($x = 0; $x <= 150; $x++) {
 
             $repeatable = $faker->boolean();
             if ($repeatable) {
@@ -31,8 +20,48 @@ class EventSeeder extends Seeder {
             } else {
                 $interval = '';
             }
+            $start_at_1 = null;
 
-            Event::create([
+            if ($repeatable === false) {
+
+                $start_at = $faker
+                    ->dateTimeBetween(
+                        '-12 week',
+                        '+14 week'
+                    );
+
+                $carbon     = new Carbon($start_at->format('Y-m-d H:i:s'));
+                $start_at_1 = $carbon->endOfDay();
+
+                $end_at = $faker
+                    ->dateTimeBetween(
+                        $start_at,
+                        $start_at_1
+                    );
+
+            } else {
+                $start_at_1 = $faker
+                    ->dateTimeBetween(
+                        '-12 week',
+                        '+14 week'
+                    );
+
+                $end_at_1 = $faker
+                    ->dateTimeBetween(
+                        $start_at_1,
+                        '+15 week'
+                    );
+
+                $end_at = $end_at_1;
+                $carbon = new Carbon($end_at_1->format('Y-m-d H:i:s'));
+                $end_at = $carbon->endOfDay();
+
+                $start_at = $start_at_1;
+                $carbon   = new Carbon($start_at_1->format('Y-m-d H:i:s'));
+                $start_at = $carbon->startOfDay();
+            }
+
+            $event = Event::create([
                 'title'       => $faker->sentence(5),
                 'description' => $faker->paragraph(3),
                 'category_id' => $faker->numberBetween(1, 10),
@@ -44,6 +73,12 @@ class EventSeeder extends Seeder {
                 'color_id'    => $faker->numberBetween(1, 10),
                 'status_id'   => $faker->numberBetween(1, 4),
             ]);
+
+            if ($repeatable === true) {
+                $event = Event::generateRepeatableEvent($start_at, $end_at, $interval, $event->id);
+            }
+
         }
     }
+
 }

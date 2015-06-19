@@ -23,6 +23,7 @@ class TasksTable extends Migration {
             $table->boolean('repeatable');
             $table->enum('interval', ["day", "week", "month", "year"])->nullable();
             $table->integer('category_id')->unsigned();
+            $table->integer('parent_id')->unsigned()->nullable();
 
             $table->foreign('color_id')
             ->references('id')

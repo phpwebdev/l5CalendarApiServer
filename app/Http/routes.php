@@ -25,3 +25,5 @@ Route::resource('events', 'EventController', ['except' => ['create', 'edit']]);
 Route::resource('colors', 'ColorController', ['except' => ['create', 'edit']]);
 Route::resource('categories', 'CategoryController', ['except' => ['create', 'edit']]);
 Route::resource('statuses', 'StatusController', ['except' => ['create', 'edit']]);
+
+Route::resource('search', 'SearchController', ['only' => ['index']]);
